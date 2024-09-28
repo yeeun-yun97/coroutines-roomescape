@@ -23,27 +23,27 @@ class BonusStep1 {
 
         // when
         val emitterJob = launch {
-            sharedFlow.emit(1)
+            sharedFlow.emit(1)//0ms
             delay(100)
-            sharedFlow.emit(2)
+            sharedFlow.emit(2)//100ms
             delay(100)
-            sharedFlow.emit(3)
-            sharedFlow.emit(4)
+            sharedFlow.emit(3)//200ms
+            sharedFlow.emit(4)//200ms
         }
 
         delay(50)
         val collectorJob1 = launch {
-            sharedFlow.collect(actual::append)
+            sharedFlow.collect(actual::append)//234
         }
 
         delay(150)
         val collectorJob2 = launch {
-            sharedFlow.collect(actual::append)
+            sharedFlow.collect(actual::append)//34
         }
 
         delay(250) // 450
         val collectorJob3 = launch {
-            sharedFlow.collect(actual::append)
+            sharedFlow.collect(actual::append)//
         }
 
         emitterJob.join()
@@ -52,7 +52,7 @@ class BonusStep1 {
         collectorJob3.cancelAndJoin()
 
         // then
-        val expected = "" // TODO: 결과값 예상
+        val expected = "12333444" // TODO: 결과값 예상
         /* TODO: 간단한 풀이과정 작성
 
          */

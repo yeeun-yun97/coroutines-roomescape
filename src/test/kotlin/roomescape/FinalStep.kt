@@ -14,10 +14,10 @@ class FinalStep {
 
     @Test
     fun `단서 조합`() = runTest {
-        val step1 = "" // TODO: step1 풀이과정 작성
-        val step2 = "" // TODO: step2 풀이과정 작성
-        val step3 = "" // TODO: step3 풀이과정 작성
-        val step4 = "" // TODO: step4 풀이과정 작성
+        val step1 = "42315" // TODO: step1 풀이과정 작성
+        val step2 = "1223344" // TODO: step2 풀이과정 작성
+        val step3 = "E21" // TODO: step3 풀이과정 작성
+        val step4 = "true" // TODO: step4 풀이과정 작성
 
         val actual = encrypt(step1 + step2 + step3 + step4)
         val answer = "fd12428384995a0cab2c06bd2fb10ce78b3364fa87fb90065b69f5ddd7e6ba91"

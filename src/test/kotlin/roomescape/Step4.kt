@@ -29,27 +29,35 @@ class Step4 {
         // when
         val collectorJob = launch {
             a
-                .flatMapLatest { b.filter { it } }
-                .flatMapLatest { c.filter { it } }
+                .flatMapLatest { b.filter { it }/*b가 트루일 때에만 emit한다?*/ }
+                .flatMapLatest { c.filter { it }/*c가 트루일 때 emit한다?*/ }
                 .onEach { actual.append(it) }
                 .collect()
         }
         val emitterJob = launch {
             delay(100)
-            c.emit(true)
-            b.value = false
-            a.value = 10
-            c.emit(false)
-            b.value = true
-            a.value = 5
+            c.emit(true)// 1, true, true
+            b.value = false//1, false, true
+
+            a.value = 10//10, false, true
+
+            c.emit(false)//10, false, false
+            b.value = true//10, true, false
+
+            a.value = 5//5, true, false
         }
         emitterJob.join()
         collectorJob.cancelAndJoin()
 
         // then
-        val expected = "" // TODO: 결과값 예상
+        val expected = "true" // TODO: 결과값 예상
         /*
             TODO: 간단한 풀이과정 작성
+            a가 바뀔 때, b가 true이면 true를 emit하는 flow가 바뀔 때 c가 true이면 true를 emit하는 flow가 바뀔 때 actual에 emit 하게 된다.
+            최초 상태에서 1, true, true이므로 true가 1회 emit 된다.
+            그 이후 b가 false가 되어, a가 10으로 바뀌었으나 emit이 되지 않는다.
+            그 이후 c는 false가 되고, b는 true가 되어 a가 5로 바뀌었으나 emit이 되지 않는다.
+            그래서 최초 한번만 작동하여 값은 true가 된다.
          */
 
         // assert문 수정하지 마세요!

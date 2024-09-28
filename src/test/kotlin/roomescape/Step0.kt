@@ -1,6 +1,8 @@
 package roomescape
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,6 +20,7 @@ class Step0 {
                 println("Not cancelled yet :(")
 
                 // TODO: 이곳에 한 줄만 추가하여 코루틴이 정상적으로 취소되도록 만들어보세요.
+                throw(CancellationException())
             }
         }
         delay(100)
